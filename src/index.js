@@ -1,7 +1,7 @@
 $(function() {
     var level = 0;
     var levelState = {};
-    var audioEnabled = true;
+    var audioEnabled = localStorage.getItem('audioEnabled') !== null ? JSON.parse(localStorage.getItem('audioEnabled')) : true;
     var timerStart = null;
     var timer = null;
     var timerActive = true;
@@ -300,10 +300,8 @@ $(function() {
 
         $(button).addClass('active');
         if(checkButton(button)) {
-            //console.log('valid');
             levelState.button += 1;
             if(levelState.button >= levels[level].tags.length) {
-                //console.log('advance level');
                 level += 1;
                 if(typeof(levels[level]) !== 'undefined') {
                     startLevel();
@@ -312,7 +310,6 @@ $(function() {
                     $('#buttons .button')
                         .removeClass('active')
                         .unbind('click');
-                    //flashText('You Win!');
                     $('#statusWrapper').hide();
                     $('#winWrapper').show();
                     playAudio('win');
@@ -322,12 +319,24 @@ $(function() {
                 playAudio('select');
             }
         } else {
-            //console.log('invalid');
             $('#buttons .button').removeClass('active');
             startLevel();
             playAudio('incorrect');
         }
     }
+
+    function setAudioEnabled(value) {
+        audioEnabled = value;
+        localStorage.setItem('audioEnabled', JSON.stringify(audioEnabled));
+        $('#audioToggle').text(audioEnabled ? 'Sound Off' : 'Sound On');
+    }
+
+    $('#audioToggle').bind('click', function(){
+        console.log('sound toggle');
+        setAudioEnabled(!audioEnabled);
+    });
+
+    setAudioEnabled(audioEnabled);
 
     startLevel(level);
 });
