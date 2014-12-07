@@ -315,6 +315,7 @@ $(function() {
                     //flashText('You Win!');
                     $('#statusWrapper').hide();
                     $('#winWrapper').show();
+                    playAudio('win');
                     timerActive = false;
                 }
             } else {
