@@ -22,7 +22,7 @@ $(function() {
         tagDarkGrey = 13,
         tagBlack = 14;
 
-    var levels = [
+    var levels = shuffle([
         {
             tags: [
                 tagRed,
@@ -39,7 +39,6 @@ $(function() {
                 tagBlue
             ]
         },
-        /*
         {
             tags: [
                 tagRed,
@@ -104,7 +103,6 @@ $(function() {
                 tagStar
             ]
         },
-*/
         {
             tags: [
                 tagBlack,
@@ -121,7 +119,7 @@ $(function() {
                 tagDarkGrey
             ]
         },
-    ];
+    ]);
 
     function updateTimer() {
         timer = Date.now();
@@ -141,8 +139,6 @@ $(function() {
         $('#buttons .button').removeClass('active');
 
         $('#levelDisplay').text(level+1);
-
-        //flashText("Level "+(level+1));
     }
 
     function playAudio(name) {
@@ -152,20 +148,14 @@ $(function() {
         document.getElementById(name+'Audio').play();
     }
 
-    function flashText(text) {
-        $('#flashtext')
-            .unbind('animationstart webkitAnimationStart MSAnimationStart')
-            .text(text)
-            .bind('animationstart webkitAnimationStart MSAnimationStart', function() {
-                $('#flashtext')
-                    .unbind('animationstart webkitAnimationStart MSAnimationStart')
-                    //.hide()
-                    .removeClass('flashtext');
-            })
-            .show()
-            .addClass('flashtext')
-        ;
-    }
+    // Modified from:
+    // Jonas Raoni Soares Silva
+    // http://jsfromhell.com/array/shuffle [rev. #1]
+    function shuffle(v){
+        var l = v.length;
+        for(var j, x, i = l; i; j = Math.floor(Math.random() * i), x = v[--i], v[i] = v[j], v[j] = x);
+        return v;
+    };
 
     function checkButton(button) {
         var tag = levels[level].tags[levelState.button];
@@ -221,7 +211,7 @@ $(function() {
         tagYellow,
         tagOutside,
         tagSquare,
-        tagDarkGrey
+        tagLightGrey
     ];
     buttons[5].tags = [
         tagRed,
