@@ -1,0 +1,1 @@
+function makeTags(c){var a=[];for(var b=0;b<c.length;b++){a[c[b]]=b}return a};
